@@ -3,6 +3,7 @@
 import boto.ec2
 import sys
 from operator import attrgetter
+import time
 
 if len(sys.argv) !=3 :
 	print "Please provide all the arguments volumeid max_snapshots_to_keep"
@@ -16,6 +17,11 @@ conn = boto.ec2.connect_to_region('ap-southeast-1')
 volumes = conn.get_all_volumes([volumeId])
 volume = volumes[0]
 print volume
+
+description=volumeId + "_"  + time.strftime("%d-%m-%Y")
+
+#if volume.create_snapshot(description):
+#    print 'Snapshot created with description: ' + description
 
 snapshots =  volume.snapshots()
 print snapshots
